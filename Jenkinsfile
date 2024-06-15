@@ -68,17 +68,17 @@ tools {
         }
         stage('Publish build info') {
             steps {
-                jf 'rt build-publish'
+                jf 'rt u /var/lib/jenkins/workspace/spring-boot/target spy-application-libs-release-local/'
             }
         }
 
-       stage('push artifact') {
-            steps {
-              jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-application-libs-release-local/'
+    //    stage('push artifact') {
+    //         steps {
+    //           jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-application-libs-release-local/'
 
 
-            }
-        }
+    //         }
+    //     }
 
     //      stage("Jar Publish") {
     //     steps {
