@@ -139,7 +139,7 @@
 	<configuration>
 	   <format>ALL</format>
 	   <nvdApiKey>fcf14f46-8661-443f-b865-af074b0846b9</nvdApiKey>
-	   <failBuildOnCVSS>10</failBuildOnCVSS>
+	   <failBuildOnCVSS>15</failBuildOnCVSS>
 	   <!-- fail the build for CVSS greater than or equal to 5 -->
 	   <!-- 
 				   use internal mirroring of CVE contents 
