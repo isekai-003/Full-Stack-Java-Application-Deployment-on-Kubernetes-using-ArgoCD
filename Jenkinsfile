@@ -74,8 +74,8 @@ tools {
                      def uploadSpec = """{
                           "files": [
                             {
-                              "pattern": "target/spyMission-1.0.0.jar",
-                              "target": "spy-application-libs-release-local",
+                              "pattern": "target/(*)",
+                              "target": "spy-application-libs-release-local/{1}",
                               "flat": "false",
                               "props" : "${properties}"
                               
