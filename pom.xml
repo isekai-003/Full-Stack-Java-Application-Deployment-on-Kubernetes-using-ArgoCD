@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ca.mihye_bang</groupId>
 	<artifactId>Assignment3_MihyeBang</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Assignment3_MihyeBang</name>
 	<description>Assignment 3</description>
 	<properties>
@@ -57,7 +57,7 @@
 </dependency>
 	</dependencies>
 
-	<distributionManagement>
+	<!-- <distributionManagement>
         <repository>
             <id>maven-releases</id>
             <url>http://65.2.144.134:8081/repository/maven-releases/</url>
@@ -66,7 +66,7 @@
             <id>maven-snapshots</id>
             <url>http://65.2.144.134:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement> -->
 
 	<build>
 		<plugins>
@@ -104,6 +104,31 @@
     </executions>
 </plugin>
 		</plugins>
+		## Adding Dependency Check to pom.xml
+<!--                   Dependency Check Plugin                   -->
+<plugin>
+   <groupId>org.owasp</groupId>
+   <artifactId>dependency-check-maven</artifactId>
+   <version>6.1.6</version>
+   <configuration>
+      <format>ALL</format>
+      <failBuildOnCVSS>8</failBuildOnCVSS>
+      <!-- fail the build for CVSS greater than or equal to 5 -->
+      <!-- 
+			      use internal mirroring of CVE contents 
+			      Suppress files 
+			      E.g. a company-wide suppression file and local project file 
+			     -->
+      <!-- 
+			     <cveUrlModified>http://internal-mirror.mycorp.com/nvdcve-1.1-modified.json.gz</cveUrlModified>  
+			                    <cveUrlBase>http://internal-mirror.mycorp.com/nvdcve-1.1-%d.json.gz</cveUrlBase>
+			     <suppressionFiles>               
+			                        <suppressionFile>http://example.org/suppression.xml</suppressionFile>
+			                        <suppressionFile>project-suppression.xml</suppressionFile> 
+			                    </suppressionFiles> 
+			                 -->
+   </configuration>
+</plugin>
 	</build>
 
 </project>
