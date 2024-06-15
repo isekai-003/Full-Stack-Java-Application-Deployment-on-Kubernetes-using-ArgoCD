@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ca.mihye_bang</groupId>
-	<artifactId>Assignment3_MihyeBang</artifactId>
+	<artifactId>spyMission</artifactId>
 	<version>1.0.0</version>
-	<name>Assignment3_MihyeBang</name>
+	<name>spyMission</name>
 	<description>Assignment 3</description>
 	<properties>
 		<java.version>11</java.version>
