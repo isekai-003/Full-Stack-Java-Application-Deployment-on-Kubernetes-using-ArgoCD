@@ -19,8 +19,19 @@ tools {
         stage("test"){
             steps{
                 echo "----------- unit test started ----------"
-                sh 'mvn surefire-report:report'
+                sh 'mvn test'
                  echo "----------- unit test Complted ----------"
+            }
+        }
+         stage('snyk scan') {
+            steps {
+                snykSecurity(
+                    snykInstallation: 'snyk@latest',
+                    snykTokenId: 'snyk-cred',
+                    monitorProjectOnBuild: false,
+                    failOnIssues: false,  // Use boolean for failOnIssues
+                    additionalArguments: '--json-file-output=all-vulnerabilities.json'
+                )
             }
         }
 
