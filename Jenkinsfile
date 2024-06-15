@@ -11,6 +11,10 @@ pipeline {
 // environment {
 //     PATH = "/opt/apache-maven-3.9.2/bin:$PATH"
 // }
+tools {
+    jdk 'java'
+    maven 'mvn'
+}
     stages {
         stage("test"){
             steps{
