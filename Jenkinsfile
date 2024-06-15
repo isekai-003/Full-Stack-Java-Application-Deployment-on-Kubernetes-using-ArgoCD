@@ -77,7 +77,7 @@ tools {
                               "pattern": "target/(*)",
                               "target": "spy-application-libs-release-local",
                               "flat": "false",
-                              "props" : "${properties}",
+                              "props" : "${properties}"
                               
                             }
                          ]
