@@ -15,6 +15,7 @@ pipeline {
 tools {
     jdk 'java'
     maven 'mvn'
+    jfrog 'jfrog-cli'
 }
     stages {
         stage("test"){
@@ -65,31 +66,45 @@ tools {
                  echo "----------- build complted ----------"
             }
         }
-         stage("Jar Publish") {
-        steps {
-            script {
-                    echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artfiact-cred"
-                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-                     def uploadSpec = """{
-                          "files": [
-                            {
-                              "pattern": "target/(*)",
-                              "target": "spy-application-libs-release-local/{1}",
-                              "flat": "false",
-                              "props" : "${properties}"
-                              
-                            }
-                         ]
-                     }"""
-                     def buildInfo = server.upload(uploadSpec)
-                     buildInfo.env.collect()
-                     server.publishBuildInfo(buildInfo)
-                     echo '<--------------- Jar Publish Ended --------------->'  
-            
+        stage('Publish build info') {
+            steps {
+                jf 'rt build-publish'
             }
-        }   
-    }
+        }
+
+       stage('push artifact') {
+            steps {
+              jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-application-libs-release-local/'
+
+
+            }
+        }
+
+    //      stage("Jar Publish") {
+    //     steps {
+    //         script {
+    //                 echo '<--------------- Jar Publish Started --------------->'
+    //                  def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artfiact-cred"
+    //                  def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+    //                  def uploadSpec = """{
+    //                       "files": [
+    //                         {
+    //                           "pattern": "target/(*)",
+    //                           "target": "spy-application-libs-release-local/{1}",
+    //                           "flat": "false",
+    //                           "props" : "${properties}"
+                              
+    //                         }
+    //                      ]
+    //                  }"""
+    //                  def buildInfo = server.upload(uploadSpec)
+    //                  buildInfo.env.collect()
+    //                  server.publishBuildInfo(buildInfo)
+    //                  echo '<--------------- Jar Publish Ended --------------->'  
+            
+    //         }
+    //     }   
+    // }
 
 
 //     stage(" Docker Build ") {
