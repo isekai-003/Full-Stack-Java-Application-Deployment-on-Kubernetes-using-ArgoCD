@@ -8,9 +8,10 @@ pipeline {
     //         label 'maven'
     //     }
     // }
-// environment {
-//     PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-// }
+environment {
+    // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
+    API_KEY = credentials('NVD_cred')
+}
 tools {
     jdk 'java'
     maven 'mvn'
@@ -48,7 +49,7 @@ tools {
   }
   stage(' OWASP-Dependency-Check') {
       steps {
-        sh "mvn dependency-check:check"
+        sh "mvn dependency-check:check -Dnvd.apiKey = env.API_KEY"
       }
       post {
         always {
