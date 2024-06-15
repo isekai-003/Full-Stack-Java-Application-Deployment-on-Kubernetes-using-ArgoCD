@@ -8,9 +8,9 @@ pipeline {
     //         label 'maven'
     //     }
     // }
-environment {
-    PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-}
+// environment {
+//     PATH = "/var/lib/jenkins/workspace/spring-boot/target"
+// }
 tools {
     jdk 'java'
     maven 'mvn'
@@ -23,18 +23,7 @@ tools {
                  echo "----------- unit test Complted ----------"
             }
         }
-         stage('snyk scan') {
-            steps {
-                snykSecurity(
-                    snykInstallation: 'snyk@latest',
-                    snykTokenId: 'snyk-cred',
-                    monitorProjectOnBuild: false,
-                    failOnIssues: false,  // Use boolean for failOnIssues
-                    additionalArguments: '--json-file-output=all-vulnerabilities.json'
-                )
-            }
-        }
-
+        
     stage('SonarQube analysis') {
     environment {
       scannerHome = tool 'sonar-scanner'
@@ -57,6 +46,16 @@ tools {
 }
     }
   }
+  stage(' OWASP-Dependency-Check') {
+      steps {
+        sh "mvn dependency-check:check"
+      }
+      post {
+        always {
+          dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+        }
+      }
+    }
   stage("build"){
             steps {
                  echo "----------- build started ----------"
