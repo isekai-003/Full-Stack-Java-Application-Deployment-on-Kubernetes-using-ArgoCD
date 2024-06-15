@@ -49,7 +49,8 @@ tools {
   stage("build"){
             steps {
                  echo "----------- build started ----------"
-                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                 sh "mvn clean package -DskipTests=true"
+                 archive 'target/*.jar'
                  echo "----------- build complted ----------"
             }
         }
