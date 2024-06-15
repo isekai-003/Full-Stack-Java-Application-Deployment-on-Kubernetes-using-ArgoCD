@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # FS-Java
 =======
 # Spy App
