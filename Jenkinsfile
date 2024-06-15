@@ -8,10 +8,12 @@ pipeline {
     //         label 'maven'
     //     }
     // }
-// environment {
-//     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-//     API_KEY = credentials('NVD_cred')
-// }
+environment {
+    // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
+    // API_KEY = credentials('NVD_cred')
+    ARTIFACTORY_REPO = 'my-repo'
+
+}
 tools {
     jdk 'java'
     maven 'mvn'
@@ -66,20 +68,25 @@ tools {
                  echo "----------- build complted ----------"
             }
         }
-        stage('Publish build info') {
-            steps {
-                jf 'rt u /var/lib/jenkins/workspace/spring-boot/target spy-application-libs-release-local/'
-            }
-        }
+          stage('Publish to Artifactory') {
+              steps {
+                   script {
+                        def artifactPath = "target/*.jar"  
+                        def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artfiact-cred"
+                        def deployer = server.createArtifactoryDeployer()
 
-    //    stage('push artifact') {
-    //         steps {
-    //           jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-application-libs-release-local/'
-
-
-    //         }
-    //     }
-
+                        // Upload artifact to Artifactory
+                        deployer.deploy(
+                    // Specify the repository and path to upload to
+                        repo: ARTIFACTORY_REPO,
+                        file: artifactPath,
+                    // Optional: set properties or additional options if needed
+                        publishBuildInfo: true,
+                        failNoOp: false
+                        )
+                    }
+                }
+            } 
     //      stage("Jar Publish") {
     //     steps {
     //         script {
