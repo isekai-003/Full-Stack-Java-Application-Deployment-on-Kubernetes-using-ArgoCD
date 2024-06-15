@@ -64,54 +64,35 @@ tools {
             steps {
                  echo "----------- build started ----------"
                  sh "mvn clean package -DskipTests=true"
-                 archive 'target/*.jar'
+                
                  echo "----------- build complted ----------"
             }
         }
-          stage('Publish to Artifactory') {
-              steps {
-                   script {
-                        def artifactPath = "target/*.jar"  
-                        def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artfiact-cred"
-                        def deployer = server.createArtifactoryDeployer()
-
-                        // Upload artifact to Artifactory
-                        deployer.deploy(
-                    // Specify the repository and path to upload to
-                        repo: ARTIFACTORY_REPO,
-                        file: artifactPath,
-                    // Optional: set properties or additional options if needed
-                        publishBuildInfo: true,
-                        failNoOp: false
-                        )
-                    }
-                }
-            } 
-    //      stage("Jar Publish") {
-    //     steps {
-    //         script {
-    //                 echo '<--------------- Jar Publish Started --------------->'
-    //                  def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artfiact-cred"
-    //                  def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-    //                  def uploadSpec = """{
-    //                       "files": [
-    //                         {
-    //                           "pattern": "target/(*)",
-    //                           "target": "spy-application-libs-release-local/{1}",
-    //                           "flat": "false",
-    //                           "props" : "${properties}"
+       
+         stage("Jar Publish") {
+        steps {
+            script {
+                    echo '<--------------- Jar Publish Started --------------->'
+                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artfiact-cred"
+                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+                     def uploadSpec = """{
+                          "files": [
+                            {
+                              "pattern": "target/(*)",
+                              "target": "${ ARTIFACTORY_REPO}/",
+                              "props" : "${properties}"
                               
-    //                         }
-    //                      ]
-    //                  }"""
-    //                  def buildInfo = server.upload(uploadSpec)
-    //                  buildInfo.env.collect()
-    //                  server.publishBuildInfo(buildInfo)
-    //                  echo '<--------------- Jar Publish Ended --------------->'  
+                            }
+                         ]
+                     }"""
+                     def buildInfo = server.upload(uploadSpec)
+                     buildInfo.env.collect()
+                     server.publishBuildInfo(buildInfo)
+                     echo '<--------------- Jar Publish Ended --------------->'  
             
-    //         }
-    //     }   
-    // }
+            }
+        }   
+    }
 
 
 //     stage(" Docker Build ") {
