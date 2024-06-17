@@ -1,4 +1,4 @@
-def registry = 'https://yelmcamp.jfrog.io'
+def registry = 'https://spy003.jfrog.io'
 // def imageName = 'valaxy05.jfrog.io/valaxy-docker-local/ttrend'
 // def version   = '2.1.4'
 pipeline {
@@ -10,14 +10,14 @@ pipeline {
     // }
 environment {
     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-    // API_KEY = credentials('NVD_cred')
+    API_KEY = credentials('NVD_cred')
     ARTIFACTORY_REPO = 'my-repo'
 
 }
 tools {
     jdk 'java'
-    maven 'mvn'
-    jfrog 'jfrog-cli'
+    maven 'maven12'
+
 }
     stages {
         stage("test"){
@@ -28,38 +28,38 @@ tools {
             }
         }
         
-//     stage('SonarQube analysis') {
-//     environment {
-//       scannerHome = tool 'sonar-scanner'
-//     }
-//     steps{
-//     withSonarQubeEnv('sonar-server') {
-//       sh "${scannerHome}/bin/sonar-scanner"
-//     }
-//     }
-//   }
-//   stage("Quality Gate"){
-//     steps {
-//         script {
-//         timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-//     def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-//     if (qg.status != 'OK') {
-//       error "Pipeline aborted due to quality gate failure: ${qg.status}"
-//     }
-//   }
-// }
-//     }
-//   }
-//   stage(' OWASP-Dependency-Check') {
-//       steps {
-//         sh "mvn dependency-check:check -Dnvd.apiKey=env.API_KEY"
-//       }
-//       post {
-//         always {
-//           dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-//         }
-//       }
-//     }
+    stage('SonarQube analysis') {
+    environment {
+      scannerHome = tool 'sonar-scanner'
+    }
+    steps{
+    withSonarQubeEnv('sonar-server') {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+    }
+  }
+  stage("Quality Gate"){
+    steps {
+        script {
+        timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+    if (qg.status != 'OK') {
+      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    }
+  }
+}
+    }
+  }
+  stage(' OWASP-Dependency-Check') {
+      steps {
+        sh "mvn dependency-check:check -Dnvd.apiKey=env.API_KEY"
+      }
+      post {
+        always {
+          dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+        }
+      }
+    }
   stage("build"){
             steps {
                  echo "----------- build started ----------"
