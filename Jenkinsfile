@@ -10,7 +10,7 @@ pipeline {
     // }
 environment {
     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-    API_KEY = credentials('NVD_cred')
+    // API_KEY = credentials('NVD_cred')
     ARTIFACTORY_REPO = 'my-repo'
 
 }
@@ -52,7 +52,7 @@ tools {
   }
   stage(' OWASP-Dependency-Check') {
       steps {
-        sh "mvn dependency-check:check -Dnvd.apiKey=env.API_KEY"
+        sh "mvn dependency-check:check "
       }
       post {
         always {
