@@ -52,12 +52,8 @@ tools {
   }
   stage(' OWASP-Dependency-Check') {
       steps {
-        sh "mvn dependency-check:check "
-      }
-      post {
-        always {
-          dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-        }
+                   dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
+                   dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
       }
     }
   stage("build"){
