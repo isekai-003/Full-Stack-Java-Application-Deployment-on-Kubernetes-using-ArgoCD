@@ -134,6 +134,7 @@ tools {
         environment {
             GIT_REPO_NAME = "FS-Java"
             GIT_USER_NAME = "isekai-003"
+            version = "2.1.2"
         }
         steps {
             withCredentials([string(credentialsId: 'github-cred', variable: 'GITHUB_TOKEN')]) {
