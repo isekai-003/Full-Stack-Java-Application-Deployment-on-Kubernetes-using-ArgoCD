@@ -142,7 +142,7 @@ tools {
                 sh '''
                     git config user.email "shamshuddin0003@gmail.com"
                     git config user.name "isekai-003"
-                    BUILD_NUMBER=${BUILD_NUMBER}
+                    version=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" ds.yml
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
