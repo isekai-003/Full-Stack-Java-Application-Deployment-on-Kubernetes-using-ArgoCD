@@ -60,7 +60,7 @@ tools {
 //     }
   stage("build"){
             steps {
-                jf 'mvn-config --spy-libs-release --spy-libs-snapshot --spy-libs-release-local --spy-libs-snapshot-local'
+                jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
 
                  echo "----------- build started ----------"
                  sh "mvn clean package -DskipTests=true"
@@ -70,7 +70,7 @@ tools {
         }
          stage('push artifact') {
             steps {
-                
+
               jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
 
 
