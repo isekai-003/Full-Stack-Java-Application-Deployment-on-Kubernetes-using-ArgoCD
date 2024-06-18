@@ -15,20 +15,25 @@ environment {
     ARTIFACTORY_CRED = 'artifact-cred'
 
 }
-// tools {
-//     // jdk 'java'
-//     maven 'maven12'
-//     jfrog 'jfrog-cli'
+tools {
+    // jdk 'java'
+    maven 'maven12'
+    // jfrog 'jfrog-cli'
 
-// }
+}
     stages {
-        // stage("test"){
-        //     steps{
-        //         echo "----------- unit test started ----------"
-        //         sh 'mvn surefire-report:report'
-        //          echo "----------- unit test Complted ----------"
-        //     }
-        // }
+        stage('COMPILE'){
+            steps{
+                sh 'mvn compile'
+            }
+        }
+        stage("test"){
+            steps{
+                echo "----------- unit test started ----------"
+                sh 'mvn surefire-report:report'
+                 echo "----------- unit test Complted ----------"
+            }
+        }
         
 //     stage('SonarQube analysis') {
 //     environment {
@@ -58,24 +63,24 @@ environment {
 //                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 //       }
 // //     }
-//   stage("build"){
-//             steps {
-//                 jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
+  stage("build"){
+            steps {
+                // jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
 
-//                  echo "----------- build started ----------"
-//                  sh "mvn clean package -DskipTests=true"
+                 echo "----------- build started ----------"
+                 sh "mvn clean package -DskipTests=true"
                 
-//                  echo "----------- build complted ----------"
-//             }
-//         }
-//          stage('push artifact') {
-//             steps {
+                 echo "----------- build complted ----------"
+            }
+        }
+        //  stage('push artifact') {
+        //     steps {
 
-//               jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
+        //       jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
 
 
-//             }
-//         }
+        //     }
+        // }
        
     //      stage("Jar Publish") {
     //     steps {
