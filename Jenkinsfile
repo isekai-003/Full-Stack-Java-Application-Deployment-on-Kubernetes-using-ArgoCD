@@ -122,7 +122,7 @@ tools {
         steps {
             script {
                echo '<--------------- Docker Publish Started --------------->'  
-                docker.withRegistry(registry, 'artfiact-cred'){
+                docker.withRegistry(registry, 'ARTIFACTORY_CRED'){
                     app.push()
                 }    
                echo '<--------------- Docker Publish Ended --------------->'  
