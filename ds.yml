@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mission
-          image: adijaiswal/mission:13 # Image that will be used to containers in the cluster
+          image: adijaiswal/mission:replaceImageTag # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
