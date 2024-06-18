@@ -18,6 +18,7 @@ environment {
 tools {
     // jdk 'java'
     maven 'maven12'
+    jfrog 'jfrog-cli'
 
 }
     stages {
@@ -59,37 +60,47 @@ tools {
 //     }
   stage("build"){
             steps {
+                jf 'mvn-config --spy-libs-release --spy-libs-snapshot --spy-libs-release-local --spy-libs-snapshot-local'
+
                  echo "----------- build started ----------"
                  sh "mvn clean package -DskipTests=true"
                 
                  echo "----------- build complted ----------"
             }
         }
-       
-         stage("Jar Publish") {
-        steps {
-            script {
-                    echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"ARTIFACTORY_CRED"
-                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-                     def uploadSpec = """{
-                          "files": [
-                            {
-                              "pattern": "target/(*)",
-                              "target": "${ARTIFACTORY_REPO}/",
-                              "props" : "${properties}"
-                              
-                            }
-                         ]
-                     }"""
-                     def buildInfo = server.upload(uploadSpec)
-                     buildInfo.env.collect()
-                     server.publishBuildInfo(buildInfo)
-                     echo '<--------------- Jar Publish Ended --------------->'  
-            
+         stage('push artifact') {
+            steps {
+                
+              jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
+
+
             }
-        }   
-    }
+        }
+       
+    //      stage("Jar Publish") {
+    //     steps {
+    //         script {
+    //                 echo '<--------------- Jar Publish Started --------------->'
+    //                  def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"ARTIFACTORY_CRED"
+    //                  def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+    //                  def uploadSpec = """{
+    //                       "files": [
+    //                         {
+    //                           "pattern": "target/(*)",
+    //                           "target": "${ARTIFACTORY_REPO}/",
+    //                           "props" : "${properties}"
+                              
+    //                         }
+    //                      ]
+    //                  }"""
+    //                  def buildInfo = server.upload(uploadSpec)
+    //                  buildInfo.env.collect()
+    //                  server.publishBuildInfo(buildInfo)
+    //                  echo '<--------------- Jar Publish Ended --------------->'  
+            
+    //         }
+    //     }   
+    // }
 
 
 //     stage(" Docker Build ") {
