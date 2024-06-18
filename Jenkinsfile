@@ -22,13 +22,25 @@ tools {
 
 }
     stages {
-        stage("test"){
-            steps{
-                echo "----------- unit test started ----------"
-                sh 'mvn surefire-report:report'
-                 echo "----------- unit test Complted ----------"
+        
+        stage('snyk scan') {
+            steps {
+                snykSecurity(
+                    snykInstallation: 'snyk@latest',
+                    snykTokenId: 'snyk_api_token',
+                    monitorProjectOnBuild: false,
+                    failOnIssues: false,  // Use boolean for failOnIssues
+                    additionalArguments: '--json-file-output=all-vulnerabilities.json'
+                )
             }
         }
+        // stage("test"){
+        //     steps{
+        //         echo "----------- unit test started ----------"
+        //         sh 'mvn surefire-report:report'
+        //          echo "----------- unit test Complted ----------"
+        //     }
+        // }
         
 //     stage('SonarQube analysis') {
 //     environment {
