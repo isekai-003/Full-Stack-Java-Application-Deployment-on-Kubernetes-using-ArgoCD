@@ -1,5 +1,5 @@
 // def registry = 'https://spy003.jfrog.io'
-def imageName = 'valaxy05.jfrog.io/spy-docker-local/myMissions'
+def imageName = 'spy003.jfrog.io/spy-docker-local/mymissions'
 def version   = '2.1.2'
 pipeline {
     agent any
