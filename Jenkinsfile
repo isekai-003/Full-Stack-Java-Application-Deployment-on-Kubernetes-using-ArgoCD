@@ -1,6 +1,6 @@
-def registry = 'https://spy003.jfrog.io'
-// def imageName = 'valaxy05.jfrog.io/valaxy-docker-local/ttrend'
-// def version   = '2.1.4'
+// def registry = 'https://spy003.jfrog.io'
+def imageName = 'valaxy05.jfrog.io/spy-docker-local/myMissions'
+def version   = '2.1.2'
 pipeline {
     agent any
     // agent {
@@ -11,29 +11,17 @@ pipeline {
 environment {
     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
     // API_KEY = credentials('NVD_cred')
-    ARTIFACTORY_REPO = 'my-repo'
+    // ARTIFACTORY_REPO = 'my-repo'
     ARTIFACTORY_CRED = 'artifact-cred'
 
 }
-tools {
-    // jdk 'java'
-    maven 'maven12'
-    jfrog 'jfrog-cli'
+// tools {
+//     // jdk 'java'
+//     maven 'maven12'
+//     jfrog 'jfrog-cli'
 
-}
+// }
     stages {
-        
-        stage('snyk scan') {
-            steps {
-                snykSecurity(
-                    snykInstallation: 'snyk@latest',
-                    snykTokenId: 'snyk_api_token',
-                    monitorProjectOnBuild: false,
-                    failOnIssues: false,  // Use boolean for failOnIssues
-                    additionalArguments: '--json-file-output=all-vulnerabilities.json'
-                )
-            }
-        }
         // stage("test"){
         //     steps{
         //         echo "----------- unit test started ----------"
@@ -69,25 +57,25 @@ tools {
 //                    dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
 //                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 //       }
-//     }
-  stage("build"){
-            steps {
-                jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
+// //     }
+//   stage("build"){
+//             steps {
+//                 jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
 
-                 echo "----------- build started ----------"
-                 sh "mvn clean package -DskipTests=true"
+//                  echo "----------- build started ----------"
+//                  sh "mvn clean package -DskipTests=true"
                 
-                 echo "----------- build complted ----------"
-            }
-        }
-         stage('push artifact') {
-            steps {
+//                  echo "----------- build complted ----------"
+//             }
+//         }
+//          stage('push artifact') {
+//             steps {
 
-              jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
+//               jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
 
 
-            }
-        }
+//             }
+//         }
        
     //      stage("Jar Publish") {
     //     steps {
@@ -115,27 +103,27 @@ tools {
     // }
 
 
-//     stage(" Docker Build ") {
-//       steps {
-//         script {
-//            echo '<--------------- Docker Build Started --------------->'
-//            app = docker.build(imageName+":"+version)
-//            echo '<--------------- Docker Build Ends --------------->'
-//         }
-//       }
-//     }
+    stage(" Docker Build ") {
+      steps {
+        script {
+           echo '<--------------- Docker Build Started --------------->'
+           app = docker.build(imageName+":"+version)
+           echo '<--------------- Docker Build Ends --------------->'
+        }
+      }
+    }
 
-//             stage (" Docker Publish "){
-//         steps {
-//             script {
-//                echo '<--------------- Docker Publish Started --------------->'  
-//                 docker.withRegistry(registry, 'artfiact-cred'){
-//                     app.push()
-//                 }    
-//                echo '<--------------- Docker Publish Ended --------------->'  
-//             }
-//         }
-//     }
+            stage (" Docker Publish "){
+        steps {
+            script {
+               echo '<--------------- Docker Publish Started --------------->'  
+                docker.withRegistry(registry, 'artfiact-cred'){
+                    app.push()
+                }    
+               echo '<--------------- Docker Publish Ended --------------->'  
+            }
+        }
+    }
 
 // stage(" Deploy ") {
 //        steps {

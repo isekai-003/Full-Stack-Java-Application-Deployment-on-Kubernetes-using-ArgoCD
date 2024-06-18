@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ca.mihye_bang</groupId>
 	<artifactId>spyMission</artifactId>
-	<version>1.0.0</version>
+	<version>2.1.2</version>
 	<name>spyMission</name>
 	<packaging>jar</packaging>
 	<description>Assignment 3</description>
