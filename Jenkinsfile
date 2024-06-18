@@ -1,4 +1,4 @@
-// def registry = 'https://spy003.jfrog.io'
+def registry = 'https://spy003.jfrog.io'
 def imageName = 'spy003.jfrog.io/spy-docker-local/mymissions'
 def version   = '2.1.2'
 pipeline {
