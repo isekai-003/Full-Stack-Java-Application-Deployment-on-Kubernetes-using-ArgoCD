@@ -12,10 +12,11 @@ environment {
     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
     // API_KEY = credentials('NVD_cred')
     ARTIFACTORY_REPO = 'my-repo'
+    ARTIFACTORY_CRED = 'artifact-cred'
 
 }
 tools {
-    jdk 'java'
+    // jdk 'java'
     maven 'maven12'
 
 }
@@ -69,13 +70,13 @@ tools {
         steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artifact-cred"
+                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"ARTIFACTORY_CRED"
                      def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
                      def uploadSpec = """{
                           "files": [
                             {
                               "pattern": "target/(*)",
-                              "target": "${ ARTIFACTORY_REPO}/",
+                              "target": "${ARTIFACTORY_REPO}/",
                               "props" : "${properties}"
                               
                             }
