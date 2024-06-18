@@ -8,13 +8,13 @@ pipeline {
     //         label 'maven'
     //     }
     // }
-environment {
-    // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-    // API_KEY = credentials('NVD_cred')
-    // ARTIFACTORY_REPO = 'my-repo'
-    ARTIFACTORY_CRED = 'artifact-cred'
+// environment {
+//     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
+//     // API_KEY = credentials('NVD_cred')
+//     // ARTIFACTORY_REPO = 'my-repo'
+//     ARTIFACTORY_CRED = 'artifact-cred'
 
-}
+// }
 tools {
     // jdk 'java'
     maven 'maven12'
@@ -122,7 +122,7 @@ tools {
         steps {
             script {
                echo '<--------------- Docker Publish Started --------------->'  
-                docker.withRegistry(registry, "ARTIFACTORY_CRED"){
+                docker.withRegistry(registry, 'artifact-cred'){
                     app.push()
                 }    
                echo '<--------------- Docker Publish Ended --------------->'  
