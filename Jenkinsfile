@@ -137,8 +137,7 @@ tools {
      stage("OWASP-ZAP"){
         steps{
             script {
-            docker run -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
-             -t ${MY_URL_ID} -r owaspzap.html
+           sh " docker run -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t ${MY_URL_ID} -r owaspzap.html"
             }
         }
      }
