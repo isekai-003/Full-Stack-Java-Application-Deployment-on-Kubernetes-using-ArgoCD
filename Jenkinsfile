@@ -12,6 +12,7 @@ environment {
     
     // // ARTIFACTORY_REPO = 'my-repo'
     // ARTIFACTORY_CRED = 'artifact-cred'
+      scannerHome = tool 'sonar-scanner'
       GIT_REPO_NAME = "FS-Java"
       GIT_USER_NAME = "isekai-003"
       version = "2.1.2"
@@ -37,40 +38,37 @@ tools {
         }
         
     stage('SonarQube analysis') {
-    environment {
-      scannerHome = tool 'sonar-scanner'
-    }
-    steps{
-    withSonarQubeEnv('sonar-server') {
-      sh "${scannerHome}/bin/sonar-scanner"
+          steps{
+                 withSonarQubeEnv('sonar-server') {
+                 sh "${scannerHome}/bin/sonar-scanner"
     }
     }
   }
-  stage("Quality Gate"){
-    steps {
-        script {
-        timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-    if (qg.status != 'OK') {
-      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+     stage("Quality Gate"){
+          steps {
+               script {
+                    timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+                    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+                    if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                            }
+                    }
+                }
+            }
     }
-  }
-}
-    }
-  }
-  stage(' Vulnerability-Scan') {
-      steps {
-        parallel(
-            "Dependency-Check":{
+    stage(' Vulnerability-Scan') {
+        steps {
+            parallel(
+                "Dependency-Check":{
                    dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            },
-            "TrivyFS-Scan": {
-                trivy fs --format table -o trivy-fs-report.html .
+                },
+                "TrivyFS-Scan": {
+                   trivy fs --format table -o trivy-fs-report.html .
 
-            }
-        )
-      }
+                }
+            )
+        }
     }
   stage("build"){
             steps {
@@ -115,9 +113,7 @@ tools {
     }
      stage('Update Deployment File') {
            
-        environment {
-          
-        }
+        
         steps {
             withCredentials([string(credentialsId: 'github-cred', variable: 'GITHUB_TOKEN')]) {
              checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/isekai-003/FS-Java.git']])
@@ -134,14 +130,6 @@ tools {
         }
     }
 
-// stage(" Deploy ") {
-//        steps {
-//          script {
-//             echo '<--------------- Helm Deploy Started --------------->'
-//             sh 'helm install ttrend ttrend-1.0.1.tgz'
-//             echo '<--------------- Helm deploy Ends --------------->'
-//          }
-//        }
-//      }  
+ 
 }
 }
