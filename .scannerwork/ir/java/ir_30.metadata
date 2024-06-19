@@ -1,0 +1,4 @@
+ca.sheridancollege.controllers.HomeController#createMission(Lca/sheridancollege/beans/Mission;LHttpSession;)Ljava/lang/String;
+ca.sheridancollege.controllers.HomeController#updateSession(Ljava/lang/String;LHttpSession;)V
+==
+addMission ca.sheridancollege.database.DatabaseAccess#addMission(Lca/sheridancollege/beans/Mission;)I

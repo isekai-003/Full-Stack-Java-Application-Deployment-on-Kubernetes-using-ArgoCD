@@ -1,0 +1,3 @@
+»
+æDependencies/libraries were not provided for analysis of SOURCE files. The 'sonar.java.libraries' property is empty. Verify your configuration, as you might end up with less precise results.√î”çÉ2Œ
+ƒThe Data Dictionary is not configured for the PLSQL analyzer, which prevents rule(s) S3641, S3921, S3618, S3651 from raising issues. See https://docs.sonarcloud.io/advanced-setup/languages/pl-sql/»∆”çÉ2

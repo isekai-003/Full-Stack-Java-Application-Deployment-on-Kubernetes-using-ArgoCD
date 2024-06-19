@@ -1,0 +1,15 @@
+
+Kca.sheridancollege.database.DatabaseAccess#deleteMission(Ljava/lang/Long;)If
+\/var/lib/workspace/spring-boot/src/main/java/ca/sheridancollege/database/DatabaseAccess.javaS S("1*”
+1T* T(Eq
+o
+V V(6
+queryjava.lang.String"__id*B
+
+__unknown_file (&$
+"DELETE FROM missions WHERE id= :id"
+^ ^(
+"": 
+S S(!
+idjava.lang.LongB.,
+*ca.sheridancollege.database.DatabaseAccessHX
