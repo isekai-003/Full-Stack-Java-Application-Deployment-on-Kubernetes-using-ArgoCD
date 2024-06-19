@@ -16,7 +16,7 @@ environment {
       GIT_REPO_NAME = "FS-Java"
       GIT_USER_NAME = "isekai-003"
       version = "2.1.2"
-      MY_URL_ID = "my-url"
+    //   MY_URL_ID = "my-url"
 
 }
 tools {
