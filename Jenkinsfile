@@ -83,7 +83,7 @@ tools {
          stage('push artifact') {
             steps {
 
-              jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
+              jf 'rt u /var/lib/workspace/spring-boot/target/spyMission-2.1.2.jar spy-libs-release-local/myMissions/spyMission-2.1.2.jar'
 
 
             }
