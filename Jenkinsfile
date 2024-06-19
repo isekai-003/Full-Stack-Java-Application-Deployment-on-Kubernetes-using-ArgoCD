@@ -59,7 +59,7 @@ tools {
     stage(' Vulnerability-Scan') {
         steps {
             parallel(
-                "Dependency-Check":{
+                "Dependency-Check": {
                    dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
                 },
