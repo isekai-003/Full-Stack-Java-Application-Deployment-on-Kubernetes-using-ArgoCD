@@ -66,7 +66,7 @@ tools {
                 "TrivyFS-Scan": {
                    trivy fs --format table -o trivy-fs-report.html .
 
-                }
+                 }
             )
         }
     }
