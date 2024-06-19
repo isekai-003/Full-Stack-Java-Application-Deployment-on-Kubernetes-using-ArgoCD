@@ -166,12 +166,13 @@ def body = """
 emailext (
 subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus.toUpperCase()}",
 body: body,
-to: 'jaiswaladi246@gmail.com',
+to: 'shamshuddin0003@gmail.com',
 from: 'jenkins@example.com',
 replyTo: 'jenkins@example.com',
 mimeType: 'text/html',
 attachmentsPattern: 'trivy-image-report.html'
 )
+}
 }
 }
 }
