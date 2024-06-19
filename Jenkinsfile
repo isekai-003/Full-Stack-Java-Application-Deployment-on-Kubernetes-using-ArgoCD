@@ -126,7 +126,7 @@ tools {
                 sh '''
                     git config user.email "shamshuddin0003@gmail.com"
                     git config user.name "isekai-003"
-                    sed -i "s/replaceImageTag/${version}/g" k8s manifests/ds.yml
+                    sed -i "s/replaceImageTag/${version}/g" k8smanifests/ds.yml
                     git add .
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
