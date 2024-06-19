@@ -137,7 +137,7 @@ tools {
      stage("OWASP-ZAP"){
         steps{
             script {
-           sh " docker run -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://a02d3189494e24646a961fee6254ec7e-1725559781.ap-south-1.elb.amazonaws.com:8080/ -r owaspzap.html"
+           sh " docker run -v ~/zap-reports:/zap/wrk -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://a02d3189494e24646a961fee6254ec7e-1725559781.ap-south-1.elb.amazonaws.com:8080/ -r /zap/wrk/owaspzap.html "
             }
         }
      }
