@@ -1,0 +1,23 @@
+
+Zca.sheridancollege.database.DatabaseAccess#addMission(Lca/sheridancollege/beans/Mission;)If
+\/var/lib/workspace/spring-boot/src/main/java/ca/sheridancollege/database/DatabaseAccess.java ("1*½
+1* (E´
+±
+ (3
+%0java.lang.String"__concat*F
+ (I:8
+6INSERT INTO missions (agent, title, gadget1, gadget2) *;
+ (3/-
++VALUES (:agent, :title, :gadget1, :gadget2)c
+a
+ (4
+queryjava.lang.String"__id*4
+
+__unknown_file (
+
+%0java.lang.String"
+( ((
+"":7
+ (&+
+mission ca.sheridancollege.beans.MissionB.,
+*ca.sheridancollege.database.DatabaseAccessHX

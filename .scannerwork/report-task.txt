@@ -1,0 +1,7 @@
+organization=yelpcamp-key
+projectKey=yelpcamp-key_spy-application
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.55282
+dashboardUrl=https://sonarcloud.io/dashboard?id=yelpcamp-key_spy-application
+ceTaskId=AZAxtPfJJXMjdYysTQA9
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZAxtPfJJXMjdYysTQA9

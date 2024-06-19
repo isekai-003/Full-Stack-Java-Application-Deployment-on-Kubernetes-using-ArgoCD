@@ -1,0 +1,10 @@
+version: 1
+type: maven
+resolver:
+    serverId: Artifactory
+    snapshotRepo: spy-libs-snapshot
+    releaseRepo: spy-libs-release
+deployer:
+    serverId: Artifactory
+    snapshotRepo: spy-libs-snapshot-local
+    releaseRepo: spy-libs-release-local

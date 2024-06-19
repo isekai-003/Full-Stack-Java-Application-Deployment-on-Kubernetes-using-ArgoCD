@@ -1,0 +1,5 @@
+ca.sheridancollege.controllers.HomeController#deleteMission(Ljava/lang/Long;LHttpSession;)Ljava/lang/String;
+ca.sheridancollege.controllers.HomeController#updateSession(Ljava/lang/String;LHttpSession;)V
+==
+deleteMission ca.sheridancollege.database.DatabaseAccess#deleteMission(Ljava/lang/Long;)I
+getMission ca.sheridancollege.database.DatabaseAccess#getMission(Ljava/lang/Long;)Lca/sheridancollege/beans/Mission;
