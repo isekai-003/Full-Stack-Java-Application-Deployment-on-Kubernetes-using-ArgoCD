@@ -1,25 +1,26 @@
 def registry = 'https://spy003.jfrog.io'
 def imageName = 'spy003.jfrog.io/spy-docker-local/mymissions'
-def version   = '2.1.2'
+
 pipeline {
-    agent any
-    // agent {
-    //     node {
-    //         label 'maven'
-    //     }
-    // }
-// environment {
-//     // PATH = "/var/lib/jenkins/workspace/spring-boot/target"
-//     // API_KEY = credentials('NVD_cred')
-//     // ARTIFACTORY_REPO = 'my-repo'
-//     ARTIFACTORY_CRED = 'artifact-cred'
+    agent {
+        node {
+            label 'build-node'
+        }
+    }
+environment {
+    
+    
+    // // ARTIFACTORY_REPO = 'my-repo'
+    // ARTIFACTORY_CRED = 'artifact-cred'
+      GIT_REPO_NAME = "FS-Java"
+      GIT_USER_NAME = "isekai-003"
+      version = "2.1.2"
 
-// }
+}
 tools {
-    // jdk 'java'
+    jdk 'java'
     maven 'maven12'
-    // jfrog 'jfrog-cli'
-
+    jfrog 'jfrog-cli'
 }
     stages {
         stage('COMPILE'){
@@ -35,79 +36,62 @@ tools {
             }
         }
         
-//     stage('SonarQube analysis') {
-//     environment {
-//       scannerHome = tool 'sonar-scanner'
-//     }
-//     steps{
-//     withSonarQubeEnv('sonar-server') {
-//       sh "${scannerHome}/bin/sonar-scanner"
-//     }
-//     }
-//   }
-//   stage("Quality Gate"){
-//     steps {
-//         script {
-//         timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-//     def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-//     if (qg.status != 'OK') {
-//       error "Pipeline aborted due to quality gate failure: ${qg.status}"
-//     }
-//   }
-// }
-//     }
-//   }
-//   stage(' OWASP-Dependency-Check') {
-//       steps {
-//                    dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
-//                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-//       }
-// //     }
+    stage('SonarQube analysis') {
+    environment {
+      scannerHome = tool 'sonar-scanner'
+    }
+    steps{
+    withSonarQubeEnv('sonar-server') {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+    }
+  }
+  stage("Quality Gate"){
+    steps {
+        script {
+        timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+    if (qg.status != 'OK') {
+      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    }
+  }
+}
+    }
+  }
+  stage(' Vulnerability-Scan') {
+      steps {
+        parallel(
+            "Dependency-Check":{
+                   dependencyCheck additionalArguments: '--scan ./   ', odcInstallation: 'DP'
+                   dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            },
+            "TrivyFS-Scan": {
+                trivy fs --format table -o trivy-fs-report.html .
+
+            }
+        )
+      }
+    }
   stage("build"){
             steps {
-                // jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
+                jf 'mvn-config --repo-resolve-releases=spy-libs-release  --repo-resolve-snapshots=spy-libs-snapshot --repo-deploy-releases=spy-libs-release-local --repo-deploy-snapshots=spy-libs-snapshot-local'
 
                  echo "----------- build started ----------"
+
                  sh "mvn clean package -DskipTests=true"
                 
                  echo "----------- build complted ----------"
             }
         }
-        //  stage('push artifact') {
-        //     steps {
+         stage('push artifact') {
+            steps {
 
-        //       jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
-
-
-        //     }
-        // }
-       
-    //      stage("Jar Publish") {
-    //     steps {
-    //         script {
-    //                 echo '<--------------- Jar Publish Started --------------->'
-    //                  def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"ARTIFACTORY_CRED"
-    //                  def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-    //                  def uploadSpec = """{
-    //                       "files": [
-    //                         {
-    //                           "pattern": "target/(*)",
-    //                           "target": "${ARTIFACTORY_REPO}/",
-    //                           "props" : "${properties}"
-                              
-    //                         }
-    //                      ]
-    //                  }"""
-    //                  def buildInfo = server.upload(uploadSpec)
-    //                  buildInfo.env.collect()
-    //                  server.publishBuildInfo(buildInfo)
-    //                  echo '<--------------- Jar Publish Ended --------------->'  
-            
-    //         }
-    //     }   
-    // }
+              jf 'rt u /var/lib/jenkins/workspace/spring-boot/target/spyMission-1.0.0.jar spy-libs-release-local/myMissions/spyMission-1.0.0.jar'
 
 
+            }
+        }
+    
     stage(" Docker Build ") {
       steps {
         script {
@@ -132,9 +116,7 @@ tools {
      stage('Update Deployment File') {
            
         environment {
-            GIT_REPO_NAME = "FS-Java"
-            GIT_USER_NAME = "isekai-003"
-            version = "2.1.2"
+          
         }
         steps {
             withCredentials([string(credentialsId: 'github-cred', variable: 'GITHUB_TOKEN')]) {
