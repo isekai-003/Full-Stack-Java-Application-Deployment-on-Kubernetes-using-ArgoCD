@@ -64,9 +64,8 @@ tools {
                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
                 },
                 "TrivyFS-Scan": {
-                   trivy fs --format table -o trivy-fs-report.html .
-
-                 }
+                  sh  " trivy fs --format table -o trivy-fs-report.html . "
+                }
             )
         }
     }
@@ -99,6 +98,11 @@ tools {
         }
       }
     }
+     stage ("Docker Image Scan") {
+        steps{
+            sh " trivy image --format table -o trivy-image-report.html shamshuddin03/spymission:2.1.2 "
+        }
+     }
 
             stage (" Docker Publish "){
         steps {
