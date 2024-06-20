@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mission
-          image: shamshuddin03/spymission:replaceImageTag# Image that will be used to containers in the cluster
+          image: shamshuddin03/spymission:2.1.2# Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
