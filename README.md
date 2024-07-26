@@ -22,9 +22,10 @@
 - Customizing schema using schema.sql file
 - Inserting initial data using data.sql file
 
-## How to Run
+## How to Run Application via Docker
 
-1. Clone the repository
-2. Open the project in your IDE of choice
-3. Run the application
+1. build the docker image
+   '''
+   docker build -t shamshuddin03/spymission:2.1.2
+   '''
 
