@@ -24,8 +24,11 @@
 
 ## How to Run Application via Docker
 
-1. build the docker image
+ build the docker image
    ```
-   docker build -t shamshuddin03/spymission:2.1.2
+   docker build -t shamshuddin03/spymission:2.1.2 .
    ```
-
+Run the docker container
+```
+  docker run -d --name spymission -p 8080:8080 spymission:2.1.2
+```
