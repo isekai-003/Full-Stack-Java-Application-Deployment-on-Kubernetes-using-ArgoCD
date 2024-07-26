@@ -25,7 +25,7 @@
 ## How to Run Application via Docker
 
 1. build the docker image
-   '''
+   ```
    docker build -t shamshuddin03/spymission:2.1.2
-   '''
+   ```
 
