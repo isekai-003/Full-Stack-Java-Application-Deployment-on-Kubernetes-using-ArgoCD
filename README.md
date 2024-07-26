@@ -1,6 +1,6 @@
 # Project Name: Java Application Deployment on Kubernetes using Jenkins and Argo CD
 
-** Project Description: Efficiently Deploying Java-based Full-Stack Web Application.**ensuring security, scalability, and high availability with the use of DevOps tools like Jenkins, Argo CD, Terraform, Ansible, Docker, Helm, Kubernetes, Packer, Prometheus, and Grafana.
+ Project Description: Efficiently Deploying Java-based Full-Stack Web Application. ensuring security, scalability, and high availability using DevOps tools like Jenkins, Argo CD, Terraform, Ansible, Docker, Helm, Kubernetes, Packer, Prometheus, and Grafana.
 
 ## Application Technologies
 
