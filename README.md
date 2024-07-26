@@ -30,5 +30,5 @@
    ```
 Run the docker container
 ```
-  docker run -d --name spymission -p 8080:8080 spymission:2.1.2
+  docker run -d --name spy -p 8080:8080 spymission:2.1.2
 ```
