@@ -1,4 +1,4 @@
-# Spy App
+# Project Name: Java Application Deployment on Kubernetes using Jenkins and Argo CD
 
 **Java-based Full-Stack Web Application.** Users can view or create missions for each agents. They can also edit/ delete missions.
 
