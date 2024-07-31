@@ -2,7 +2,7 @@
 
  Project Description: Efficiently Deploying Java-based Full-Stack Web Application. ensuring security, scalability, and high availability using DevOps tools like Jenkins, Argo CD, Terraform, Ansible, Docker, Helm, Kubernetes, Packer, Prometheus, and Grafana.
 
- ![Sitemap Whiteboard in Green Purple Basic Style](https://github.com/user-attachments/assets/e55b89d3-30ef-4cf5-b94a-620b8db5c0bd)
+![Sitemap Whiteboard in Green Purple Basic Style (1)](https://github.com/user-attachments/assets/a808056e-e663-4852-90f2-da4a7aed21e3)
 
 ## Application Technologies
 
