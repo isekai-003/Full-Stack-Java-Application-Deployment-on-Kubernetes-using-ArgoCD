@@ -34,3 +34,14 @@ Run the docker container
 ```
   docker run -d --name spy -p 8080:8080 spymission:2.1.2
 ```
+## Several stages involved in Jenkins and Argo CD
+
+![Screenshot (4)](https://github.com/user-attachments/assets/17aee379-6a19-480d-b97c-37c11494cb72)
+
+![Screenshot (5)](https://github.com/user-attachments/assets/28a29474-778a-48d1-9d16-52ac8a6882ac)
+
+![Screenshot (6)](https://github.com/user-attachments/assets/35b826db-019f-45c0-98ce-1d3043bff1e9)
+
+![Screenshot (9)](https://github.com/user-attachments/assets/7ae502d7-bb68-4f3a-998c-13a9c0d80146)
+
+
